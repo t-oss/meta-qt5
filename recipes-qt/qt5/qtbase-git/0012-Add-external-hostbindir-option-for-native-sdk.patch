@@ -1,7 +1,7 @@
-From 21ffd1ad245c12d9e9ea4554832866278d0f0f25 Mon Sep 17 00:00:00 2001
+From 6425d71d52c5587f323fe28af62530d5c82b02fd Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 10/11] Add -external-hostbindir option for native(sdk)
+Subject: [PATCH 12/13] Add -external-hostbindir option for native(sdk)
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -29,14 +29,14 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  qmake/property.cpp                  | 1 +
  src/corelib/global/qlibraryinfo.cpp | 3 ++-
  src/corelib/global/qlibraryinfo.h   | 1 +
- tools/configure/configureapp.cpp    | 7 +++++++
- 4 files changed, 11 insertions(+), 1 deletion(-)
+ tools/configure/configureapp.cpp    | 8 ++++++++
+ 4 files changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/qmake/property.cpp b/qmake/property.cpp
-index 817ae95..c69539f 100644
+index 051e056..50da6ed 100644
 --- a/qmake/property.cpp
 +++ b/qmake/property.cpp
-@@ -68,6 +68,7 @@ static const struct {
+@@ -67,6 +67,7 @@ static const struct {
      { "QT_HOST_DATA", QLibraryInfo::HostDataPath, true },
      { "QT_HOST_BINS", QLibraryInfo::HostBinariesPath, true },
      { "QT_HOST_LIBS", QLibraryInfo::HostLibrariesPath, true },
@@ -45,10 +45,10 @@ index 817ae95..c69539f 100644
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index f663c88..675bd4c 100644
+index 91ca643..7a567fa 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -373,7 +373,7 @@ QLibraryInfo::isDebugBuild()
+@@ -348,7 +348,7 @@ QLibraryInfo::isDebugBuild()
   */
  
  static const struct {
@@ -57,31 +57,31 @@ index f663c88..675bd4c 100644
  } qtConfEntries[] = {
      { "Prefix", "." },
      { "Documentation", "doc" }, // should be ${Data}/doc
-@@ -398,6 +398,7 @@ static const struct {
+@@ -374,6 +374,7 @@ static const struct {
      { "HostBinaries", "bin" },
      { "HostLibraries", "lib" },
      { "HostData", "." },
 +    { "ExternalHostBinaries", "" },
      { "TargetSpec", "" },
      { "HostSpec", "" },
-     { "HostPrefix", "" },
+ #endif
 diff --git a/src/corelib/global/qlibraryinfo.h b/src/corelib/global/qlibraryinfo.h
-index 1ad7637..5a8b127 100644
+index 543c4b3..a02e03a 100644
 --- a/src/corelib/global/qlibraryinfo.h
 +++ b/src/corelib/global/qlibraryinfo.h
-@@ -81,6 +81,7 @@ public:
+@@ -80,6 +80,7 @@ public:
          HostBinariesPath,
          HostLibrariesPath,
          HostDataPath,
 +        ExternalHostBinariesPath,
          TargetSpecPath,
          HostSpecPath,
-         HostPrefixPath,
+         LastHostPath = HostSpecPath,
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 0490952..5a9ad3d 100644
+index 6e9d4aa..0ca4daf 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
-@@ -1209,6 +1209,13 @@ void Configure::parseCmdLine()
+@@ -1191,6 +1191,13 @@ void Configure::parseCmdLine()
              dictionary[ "QT_EXT_PREFIX" ] = configCmdLine.at(i);
          }
  
@@ -95,6 +95,14 @@ index 0490952..5a9ad3d 100644
          else if (configCmdLine.at(i) == "-make-tool") {
              ++i;
              if (i == argCount)
+@@ -4004,6 +4011,7 @@ void Configure::generateQConfigCpp()
+                   << "    \"qt_hbinpath=" << formatPath(dictionary["QT_HOST_BINS"]) << "\"," << endl
+                   << "    \"qt_hlibpath=" << formatPath(dictionary["QT_HOST_LIBS"]) << "\"," << endl
+                   << "    \"qt_hdatpath=" << formatPath(dictionary["QT_HOST_DATA"]) << "\"," << endl
++                  << "    \"qt_ebinpath=" << formatPath(dictionary["QT_EXTERNAL_HOST_BINS"]) << "\"," << endl
+                   << "    \"qt_targspec=" << targSpec << "\"," << endl
+                   << "    \"qt_hostspec=" << hostSpec << "\"," << endl
+                   << "#endif" << endl
 -- 
 2.3.5
 

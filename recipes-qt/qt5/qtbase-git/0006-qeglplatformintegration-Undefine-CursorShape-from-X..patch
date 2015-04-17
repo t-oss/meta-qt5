@@ -1,7 +1,7 @@
-From 27be7849765282c56da2d394cfc5d3a5ddc0a89b Mon Sep 17 00:00:00 2001
+From 6061c8457ea1f76745bd9918e61bda01ef96ce56 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 19 Mar 2014 18:32:28 +0100
-Subject: [PATCH 5/8] qeglplatformintegration: Undefine CursorShape from X.h
+Subject: [PATCH 06/12] qeglplatformintegration: Undefine CursorShape from X.h
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/src/platformsupport/eglconvenience/qeglplatformintegration_p.h b/src/platformsupport/eglconvenience/qeglplatformintegration_p.h
-index 42fbf8c..8950f2d 100644
+index 2b5d5f5..a0aab03 100644
 --- a/src/platformsupport/eglconvenience/qeglplatformintegration_p.h
 +++ b/src/platformsupport/eglconvenience/qeglplatformintegration_p.h
 @@ -50,6 +50,12 @@
@@ -24,7 +24,7 @@ index 42fbf8c..8950f2d 100644
 +
  QT_BEGIN_NAMESPACE
  
- class QEGLPlatformWindow;
+ class QEGLPlatformScreen;
 -- 
 2.3.5
 
